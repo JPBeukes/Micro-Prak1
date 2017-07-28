@@ -1,0 +1,11 @@
+\contentsline {section}{\numberline {1}Introduction}{1}{section.1}
+\contentsline {section}{\numberline {2}Overview and Background}{1}{section.2}
+\contentsline {subsection}{\numberline {2.1}Image as a discrete signal}{1}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Edge detection}{1}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Grayschale for DFT}{1}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}DFT and IDFT}{1}{subsection.2.4}
+\contentsline {section}{\numberline {3}Separating RGB channels}{2}{section.3}
+\contentsline {section}{\numberline {4}Edge Detection}{2}{section.4}
+\contentsline {section}{\numberline {5}DFT and IDFT}{3}{section.5}
+\contentsline {section}{\numberline {6}Conclusion}{4}{section.6}
+\contentsline {section}{References}{4}{section.6}

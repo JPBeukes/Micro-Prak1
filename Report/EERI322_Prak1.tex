@@ -1,0 +1,229 @@
+\documentclass[a4paper,12pt]{article}
+%\documentclass[10pt]{IEEEtran}
+
+	\usepackage{wrapfig}	% To wrap text around figure
+	\usepackage{graphicx} 	% To include pictures
+	\graphicspath{{images/}} % Set default Figure path
+	\usepackage{subfigure} 	% To have the funtionality of multiple pictures per figure
+	\usepackage{pstricks} 	% To use the functionality of a powerful drawing tool and position some pictures correctly.
+ 	\usepackage{epsfig} 	% extra package for .eps graphics usage
+ 	\usepackage{pst-grad} 	% For gradients
+ 	\usepackage{pst-plot} 	% For axes
+	\usepackage{amsmath} 	% Extra math symbols There are a lot of ams packages
+	\usepackage{steinmetz}	% Polar form of complex numbers
+	\usepackage{fancyhdr} 	% To use fancy headers and footers --- requires for most proffesional docs
+	\usepackage{watermark} 	% To include a figure in the backround - the frontpage for example
+	\usepackage{enumerate} 	% To enumerate your items in a list with any style
+	\usepackage[colorlinks=true, linkcolor=blue, citecolor=red, urlcolor=blue]{hyperref} % hyperlinks etc, must be the last package in the package list.
+	\usepackage{epstopdf} %Include die
+	\numberwithin{equation}{section} %number figures and equations according to the section working in
+	\numberwithin{figure}{section}
+	\usepackage[bottom]{footmisc} 	%force footnotes to the bottom of the page
+	\usepackage{booktabs}
+	\parindent=0pt % to indent the paragraph acording South African standards and beter readability
+	\parskip=6pt % the size of the space between paragraphs
+	\usepackage[final]{pdfpages}
+	\usepackage{float} %For positioning an image at a specific location
+	
+	\newcommand{\spasie}{\vspace{0.8cm}} % A user defined command for a small space
+
+% User defined to include your own signature in a document --- to sign afterwards if you need to
+\newcommand{\signature}{\vspace*{0.5in}..........................................................
+\\ \begin{scriptsize} Signed: \ \ John Smith --- 10100011001010 \end{scriptsize}} 
+
+% Creates an empty date environment where the date is displayed automatically (e.g., \title environment)
+
+%*************************************************************************************************
+%Titles and authors
+%*************************************************************************************************
+\title	{
+			\vspace{1 cm} \Huge{\textsc{Practical 1} \\
+				    \Large EERI 322
+		}
+}
+\author	{ By: \\ \begin{tabular}{l  r} 
+J.P. Beukes & 260281071\\
+D.D. Krynauw & 260***
+ \end{tabular}
+\\
+\\
+\\
+Submitted in pursuit of the degree\\\\
+\textbf{BACHELOR OF ENGINEERING}\\
+\textbf{In}\\
+\textbf{COMPUTER AND ELECTRONIC ENGINEERING}\\\\\\
+\textbf{North-West University  Potchefstroom Campus}\\
+\vspace*{0.8cm}
+		}
+
+%*************************************************************************************************
+%Pagestyle & headers & footers
+%*************************************************************************************************
+	\pagestyle{fancy} 	% Other pagestyles can be used
+	\headheight=15pt 	% Have enough space so that the header can fit without warnings
+	\headwidth=6.7in 	% The width of the header 
+	\textwidth=6.6in 	% The width of the text
+	\oddsidemargin=0in 	% The margin indent on odd pagenumbers
+	\evensidemargin=0in 	% The margin indent on even pagenumbers
+
+% Headers
+\rhead{\begin{pspicture}(0,0)(0,0)
+\includegraphics[scale=0.25]{NWU_pukke.eps} 
+      \end{pspicture}}
+
+\chead{} % center header
+
+\lhead{\textbf{\textsf{\footnotesize FACULTY OF ENGINEERING}}}
+
+% Footer
+\lfoot{Practical 1} 
+
+\cfoot{\today} 
+
+\rfoot{\thepage} 
+
+% To increase the header or footer line size
+\renewcommand{\headrulewidth}{1pt} 
+\renewcommand{\footrulewidth}{1pt}
+
+
+
+%*************************************************************************************************
+%Beginning of the document
+%*************************************************************************************************
+\begin{document}
+%\sffamily   		% Include this for sans serif font family
+%\fontfamily{pcr} 	% More ways of changing font see: http://tex.loria.fr/general/new/fntguide.html
+
+% First pages are number in Roman numerals
+\pagenumbering{roman}
+ 
+% Includes graphics of title page in the background. You may add your own path and store the reused images in only one folder so that you do not have to copy the .eps images to the working folder every time. 
+\thiswatermark{
+\begin{pspicture}(2.3,25)(2.3,25)
+    \includegraphics[scale=0.23]{VBTEX.eps} 
+\end{pspicture}}
+
+\maketitle % To display the author and title that was defined earlier
+
+\thispagestyle{empty} 	% This page should not have header or footers
+Supervisor: Mr. C. van der Merwe\\
+Potchefstroom\\
+2017
+
+\pagebreak
+
+\tableofcontents 
+
+\listoffigures
+
+\section*{List of Abbreviations}
+\begin{center}
+\begin{tabular}{l l}
+DFT & Discrete Fourier Transform\\
+IDFT & Inverse Discrete Fourier Transform\\
+DSP & Digital Signal Processing\\
+FFT & Fast Fourier Transform\\
+\end{tabular}
+\end{center}
+
+\newpage
+\pagenumbering{arabic}
+
+\section{Introduction}
+Digital systems are becoming increasingly popular in the modern world of signal theory. It is therefore essential to develop techniques for manipulating digital signals. A prominent division of digital signals are images. 
+
+This practical investigates methods for processing digital images in both the time and frequency domain. The platform chosen for this practical is Qt Creator, with all programming done in C++.
+
+\section{Overview and Background}
+\subsection{Image as a discrete signal}
+An image can be modelled as a two-dimensional discrete signal with each pixel having three channels, namely red, green and blue \cite{mitra}. 
+
+\subsection{Edge detection}
+To implement edge detection, the image is first separated into its composing channels, thereafter both vertical and horizontal edge detection are applied. The channels are then summed to produce the edges of the original image.
+
+\subsection{Grayschale for DFT}
+To apply a Discrete Fourier Transform (DFT), the image must first be converted to a grayschale image. Qt's standard method for grayschale conversion is used. This formula for the gray value of a pixel is implemented in Qt as follows:
+
+\begin{equation}
+	gray = (red \times 11 + green \times 16 + blue \times 5) \div 32
+\end{equation}
+
+\subsection{DFT and IDFT}
+After calculating the DFT, the magnitude and phase components are displayed on separate images. The Inverse DFT (IDFT) is then drawn from the DFT to produce the original grayschale image.
+
+
+\section{Separating RGB channels}
+To extract every channel, the original image is iterated pixel, by pixel, copying every channel to corresponding pixels of separate images. Standard qRed, qGreen(), qBlue() and setPixel() functions is used to implement channel separation in Qt. The original image and results form separating the channels is presented in Figure \ref{fig:original} to \ref{fig:b} below.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.2]{original.png}
+    \caption[Original Image]{Image used in this report.}
+    \label{fig:original}
+\end{figure}
+
+
+\section{Edge Detection}
+As stated above, edge detection is done over several steps on each of the  rgb channels separately. The first step is to apply a horizontal and vertical Kernel Convolution to every channel.
+
+This practical's kernel (i.e. Sobel operator) is a $ 3 \times 3$ as shown in Figure \ref{fig:sobel}. For each pixel of every channel, the pixel is multiplied by the kernel. The elements of the resulting matrix are then summed to produce a pixel value for a new image.
+
+Kernel Convolution using the horizontal Sobel operator is first applied to every channel (Figure \ref{fig:rEdgeY} to \ref{fig:bEdgeY})
+
+
+The process is then repeated using the vertical Sobel operator (Figure \ref{fig:rEdgeX} to \ref{fig:bEdgeX})
+
+
+\pagebreak
+These images carrying the resulting horizontal and vertical edges are then summed together to produce images containing all of the edges detected on each channel (Figure \ref{fig:rTotalEdge} to \ref{fig:bTotalEdge})
+
+
+Finally, the edges are then summed together to produce a composite image containing all edges detected through the use of Sobel edge detection. (Figure \ref{fig:sumEdge})
+
+\section{DFT and IDFT}
+The Discrete Fourier Transform (DFT) is a process used to obtain the frequency spectrum of a sequence. In the case of this practical, the sequence is an image and therefore the DFT will produce a  two-dimensional complex valued matrix which can be displayed as a magnitude and phase image.
+
+The following equation was implemented to calculate the DFT of an image:
+
+\begin{Large}
+\begin{equation}
+	F[k,l] = \frac{1}{\sqrt{MN}}\sum_{m = 0}^{M-1} \sum_{n = 0}^{N-1} f[m,n] e^{-j 2 \pi (\frac{k}{M} m+ \frac{l}{N} n)},
+\end{equation}
+\end{Large}
+
+where $ j = \sqrt{-1} $  \cite{pratt2001digital}.
+
+After transformation, the resulting phase and magnitude of the DFT is displayed on separate images. (Figure \ref{fig:dftMag} and \ref{fig:dftPhase})
+
+
+
+The reverse process yields the Inverse DFT (IDFT), which is implemented using
+
+\begin{Large}
+\begin{equation}
+	f[k,l] = \frac{1}{\sqrt{MN}}\sum_{m = 0}^{M-1} \sum_{n = 0}^{N-1} F[m,n] e^{j 2 \pi (\frac{k}{M} m+ \frac{l}{N} n)},
+\end{equation}
+\end{Large}
+
+where $ j = \sqrt{-1} $  \cite{pratt2001digital}.
+
+\pagebreak
+
+\section{Conclusion}
+As presented in this report, this practical demonstrates common techniques used in digital image processing. However, the program written in this practical is not yet extremely robust. One of its limitations is that the DFT can only handle square images. It should also be noted that the DFT is only designed to handle images with an even number of pixels in its width and height.
+
+The DFT and IDFT algorithm used in this practical is simple, but inefficient. A common alternative is to use a FFT (Fast Fourier Transform), which will reduce the computing time from minutes to milliseconds. The current DFT has a complexity order of O($n^4$), consequently a small increase in image width and height yields a large increase in computation time. It is found that a 100x100 image takes approximately eight seconds to process.
+
+
+
+{
+\addcontentsline{toc}{section}{References}
+% You must cite the documents that are used in this type of environment.......
+ \nocite{*} % include this when you want to have all your (Jabref) references shown. comment out if you want only the ones that are used in the document diplayed.
+ \bibliographystyle{IEEEtran}
+\bibliography{sampleref} % the path to your filename of your .bib library
+}
+
+
+\end{document}
